@@ -19,6 +19,6 @@ Current keys simulated :
 Features :
 - Simulate keyboard keys
 
-Future features :
+Planned features :
 - Simulate XInput keys
 - Simulate DInput keys
