@@ -15,6 +15,8 @@ Current keys simulated :
 - R : Space
 - Start : Enter
 - Select : Shift
+- Touchscreen : Mouse movement
+- Retrotouch : Left/Right click
 
 Features :
 - Simulate keyboard keys
