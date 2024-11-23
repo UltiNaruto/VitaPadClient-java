@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.yaml.snakeyaml.constructor.SafeConstructor;
 import org.yaml.snakeyaml.error.YAMLException;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.nodes.Node;
 import org.yaml.snakeyaml.nodes.Tag;
 
@@ -13,8 +14,9 @@ import psp2.UltiNaruto.VitaPadClient.configuration.serialization.ConfigurationSe
 
 public class YamlConstructor extends SafeConstructor
 {
-	public YamlConstructor()
+	public YamlConstructor(LoaderOptions loaderOptions)
 	{
+		super(loaderOptions);
 		this.yamlConstructors.put(Tag.MAP, new ConstructCustomObject());
 	}
 	private class ConstructCustomObject extends SafeConstructor.ConstructYamlMap {
@@ -28,8 +30,8 @@ public class YamlConstructor extends SafeConstructor
 			Map<?, ?> raw = (Map<?, ?>) super.construct(node);
 
 			if (raw.containsKey("==")) {
-				Map typed = new LinkedHashMap(raw.size());
-				for (Map.Entry entry : raw.entrySet()) {
+				Map<String, Object> typed = new LinkedHashMap<String, Object>(raw.size());
+				for (Map.Entry<?, ?> entry : raw.entrySet()) {
 					typed.put(entry.getKey().toString(), entry.getValue());
 				}
 				try

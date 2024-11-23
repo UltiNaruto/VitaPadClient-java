@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.commons.lang3.Validate;
 import org.apache.logging.log4j.LogManager;
 import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.YAMLException;
 import org.yaml.snakeyaml.representer.Representer;
@@ -22,8 +23,9 @@ import psp2.UltiNaruto.VitaPadClient.configuration.InvalidConfigurationException
 /*     */   protected static final String COMMENT_PREFIX = "# ";
 /*     */   protected static final String BLANK_CONFIG = "{}\n";
 /*  27 */   private final DumperOptions yamlOptions = new DumperOptions();
-/*  28 */   private final Representer yamlRepresenter = new YamlRepresenter();
-/*  29 */   private final Yaml yaml = new Yaml(new YamlConstructor(), this.yamlRepresenter, this.yamlOptions);
+/*  27 */   private final LoaderOptions yamlLoaderOptions = new LoaderOptions();
+/*  28 */   private final Representer yamlRepresenter = new YamlRepresenter(yamlOptions);
+/*  29 */   private final Yaml yaml = new Yaml(new YamlConstructor(yamlLoaderOptions), this.yamlRepresenter, this.yamlOptions);
 /*     */ 
 /*     */   public String saveToString()
 /*     */   {
@@ -43,9 +45,9 @@ import psp2.UltiNaruto.VitaPadClient.configuration.InvalidConfigurationException
 /*     */ 
 /*     */   public void loadFromString(String contents) throws InvalidConfigurationException {
 /*  49 */     Validate.notNull(contents, "Contents cannot be null");
-/*     */     Map input;
+/*     */     Map<?, ?> input;
 /*     */     try {
-/*  53 */       input = (Map)this.yaml.load(contents);
+/*  53 */       input = (Map<?, ?>)this.yaml.load(contents);
 /*     */     } catch (YAMLException e) {
 /*  55 */       throw new InvalidConfigurationException(e);
 /*     */     } catch (ClassCastException e) {
@@ -63,12 +65,12 @@ import psp2.UltiNaruto.VitaPadClient.configuration.InvalidConfigurationException
 /*     */ 
 /*     */   protected void convertMapsToSections(Map<?, ?> input, ConfigurationSection section)
 /*     */   {
-/*  71 */     for (Map.Entry entry : input.entrySet()) {
+/*  71 */     for (Map.Entry<?, ?> entry : input.entrySet()) {
 /*  72 */       String key = entry.getKey().toString();
 /*  73 */       Object value = entry.getValue();
 /*     */ 
 /*  75 */       if ((value instanceof Map))
-/*  76 */         convertMapsToSections((Map)value, section.createSection(key));
+/*  76 */         convertMapsToSections((Map<?, ?>)value, section.createSection(key));
 /*     */       else
 /*  78 */         section.set(key, value);
 /*     */     }

@@ -33,7 +33,7 @@ implements Configuration
 	public void addDefaults(Map<String, Object> defaults) {
 		Validate.notNull(defaults, "Defaults may not be null");
 
-		for (Map.Entry entry : defaults.entrySet())
+		for (Map.Entry<String, Object> entry : defaults.entrySet())
 			addDefault((String)entry.getKey(), entry.getValue());
 	}
 

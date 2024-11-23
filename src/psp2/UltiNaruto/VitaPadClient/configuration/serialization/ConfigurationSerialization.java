@@ -15,7 +15,7 @@ import org.apache.commons.lang3.Validate;
 /*     */ {
 /*     */   public static final String SERIALIZED_TYPE_KEY = "==";
 /*     */   private final Class<? extends ConfigurationSerializable> clazz;
-/*  27 */   private static Map<String, Class<? extends ConfigurationSerializable>> aliases = new HashMap();
+/*  27 */   private static Map<String, Class<? extends ConfigurationSerializable>> aliases = new HashMap<String, Class<? extends ConfigurationSerializable>>();
 /*     */ 
 /*     */   protected ConfigurationSerialization(Class<? extends ConfigurationSerializable> clazz)
 /*     */   {
@@ -100,7 +100,7 @@ import org.apache.commons.lang3.Validate;
 /*     */     }
 /*     */ 
 /* 125 */     if (result == null) {
-/* 126 */       Constructor constructor = getConstructor();
+/* 126 */       Constructor<? extends ConfigurationSerializable> constructor = getConstructor();
 /*     */ 
 /* 128 */       if (constructor != null) {
 /* 129 */         result = deserializeViaCtor(constructor, args);
@@ -117,7 +117,7 @@ import org.apache.commons.lang3.Validate;
 /*     */ 
 /*     */   public static ConfigurationSerializable deserializeObject(Map<String, ?> args)
 /*     */   {
-/* 166 */     Class clazz = null;
+/* 166 */     Class<? extends ConfigurationSerializable> clazz = null;
 /*     */ 
 /* 168 */     if (args.containsKey("=="))
 /*     */       try {
@@ -168,7 +168,7 @@ import org.apache.commons.lang3.Validate;
 /*     */ 
 /*     */   public static Class<? extends ConfigurationSerializable> getClassByAlias(String alias)
 /*     */   {
-/* 242 */     return (Class)aliases.get(alias);
+/* 242 */     return (Class<? extends ConfigurationSerializable>)aliases.get(alias);
 /*     */   }
 /*     */ 
 /*     */   public static String getAlias(Class<? extends ConfigurationSerializable> clazz)

@@ -420,10 +420,10 @@ public class Main {
 					
 					if (data.click != PSP2TouchScreenEvents.NO_INPUT.v()){
 						if (isEventCaught(data.click, PSP2TouchScreenEvents.MOUSE_MOV)) SendMouseMove(data.tx, data.ty);
-						if (isEventCaught(data.click, PSP2TouchScreenEvents.LEFT_CLICK) && !isEventCaught(olddata.click, PSP2TouchScreenEvents.LEFT_CLICK)) SendMouseButton(InputEvent.BUTTON1_MASK, true);
-						else if (isEventCaught(olddata.click, PSP2TouchScreenEvents.LEFT_CLICK) && !isEventCaught(data.click, PSP2TouchScreenEvents.LEFT_CLICK)) SendMouseButton(InputEvent.BUTTON1_MASK, false);
-						if (isEventCaught(data.click, PSP2TouchScreenEvents.RIGHT_CLICK) && !isEventCaught(olddata.click, PSP2TouchScreenEvents.RIGHT_CLICK)) SendMouseButton(InputEvent.BUTTON3_MASK, true);
-						else if (isEventCaught(olddata.click, PSP2TouchScreenEvents.RIGHT_CLICK) && !isEventCaught(data.click, PSP2TouchScreenEvents.RIGHT_CLICK)) SendMouseButton(InputEvent.BUTTON3_MASK, false);
+						if (isEventCaught(data.click, PSP2TouchScreenEvents.LEFT_CLICK) && !isEventCaught(olddata.click, PSP2TouchScreenEvents.LEFT_CLICK)) SendMouseButton(InputEvent.BUTTON1_DOWN_MASK, true);
+						else if (isEventCaught(olddata.click, PSP2TouchScreenEvents.LEFT_CLICK) && !isEventCaught(data.click, PSP2TouchScreenEvents.LEFT_CLICK)) SendMouseButton(InputEvent.BUTTON1_DOWN_MASK, false);
+						if (isEventCaught(data.click, PSP2TouchScreenEvents.RIGHT_CLICK) && !isEventCaught(olddata.click, PSP2TouchScreenEvents.RIGHT_CLICK)) SendMouseButton(InputEvent.BUTTON3_DOWN_MASK, true);
+						else if (isEventCaught(olddata.click, PSP2TouchScreenEvents.RIGHT_CLICK) && !isEventCaught(data.click, PSP2TouchScreenEvents.RIGHT_CLICK)) SendMouseButton(InputEvent.BUTTON3_DOWN_MASK, false);
 					}
 					
 					olddata = data;

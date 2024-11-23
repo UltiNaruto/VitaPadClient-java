@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.lang3.Validate;
@@ -13,7 +14,7 @@ import org.apache.commons.lang3.Validate;
 /*     */ public class MemorySection
 /*     */   implements ConfigurationSection
 /*     */ {
-/*     */   protected final Map<String, Object> map = new LinkedHashMap();
+/*     */   protected final Map<String, Object> map = new LinkedHashMap<String, Object>();
 /*     */   private final Configuration root;
 /*     */   private final ConfigurationSection parent;
 /*     */   private final String path;
@@ -46,7 +47,7 @@ import org.apache.commons.lang3.Validate;
 /*     */   }
 /*     */ 
 /*     */   public Set<String> getKeys(boolean deep) {
-/*     */     Set result = new LinkedHashSet();
+/*     */     Set<String> result = new LinkedHashSet<String>();
 /*     */ 
 /*     */     Configuration root = getRoot();
 /*     */     if ((root != null) && (root.options().copyDefaults())) {
@@ -63,7 +64,7 @@ import org.apache.commons.lang3.Validate;
 /*     */   }
 /*     */ 
 /*     */   public Map<String, Object> getValues(boolean deep) {
-/*     */     Map result = new LinkedHashMap();
+/*     */     Map<String, Object> result = new LinkedHashMap<String, Object>();
 /*     */ 
 /*     */     Configuration root = getRoot();
 /*     */     if ((root != null) && (root.options().copyDefaults())) {
@@ -240,9 +241,9 @@ import org.apache.commons.lang3.Validate;
 /*     */   public ConfigurationSection createSection(String path, Map<?, ?> map) {
 /* 261 */     ConfigurationSection section = createSection(path);
 /*     */ 
-/* 263 */     for (Map.Entry entry : map.entrySet()) {
+/* 263 */     for (Entry<?, ?> entry : map.entrySet()) {
 /* 264 */       if ((entry.getValue() instanceof Map))
-/* 265 */         section.createSection(entry.getKey().toString(), (Map)entry.getValue());
+/* 265 */         section.createSection(entry.getKey().toString(), (Map<?, ?>)entry.getValue());
 /*     */       else {
 /* 267 */         section.set(entry.getKey().toString(), entry.getValue());
 /*     */       }
@@ -315,12 +316,12 @@ import org.apache.commons.lang3.Validate;
 /*     */   public List<?> getList(String path)
 /*     */   {
 /* 352 */     Object def = getDefault(path);
-/* 353 */     return getList(path, (def instanceof List) ? (List)def : null);
+/* 353 */     return getList(path, (def instanceof List) ? (List<?>)def : null);
 /*     */   }
 /*     */ 
 /*     */   public List<?> getList(String path, List<?> def) {
 /* 357 */     Object val = get(path, def);
-/* 358 */     return (List)((val instanceof List) ? val : def);
+/* 358 */     return (List<?>)((val instanceof List) ? val : def);
 /*     */   }
 /*     */ 
 /*     */   public boolean isList(String path) {
@@ -329,15 +330,15 @@ import org.apache.commons.lang3.Validate;
 /*     */   }
 /*     */ 
 /*     */   public List<String> getStringList(String path) {
-/* 367 */     List list = getList(path);
+/* 367 */     List<?> list = getList(path);
 /*     */ 
 /* 369 */     if (list == null) {
-/* 370 */       return new ArrayList(0);
+/* 370 */       return new ArrayList<String>(0);
 /*     */     }
 /*     */ 
-/* 373 */     List result = new ArrayList();
+/* 373 */     List<String> result = new ArrayList<String>();
 /*     */ 
-/* 375 */     for (Iterator i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
+/* 375 */     for (Iterator<?> i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
 /* 376 */       if (((object instanceof String)) || (isPrimitiveWrapper(object))) {
 /* 377 */         result.add(String.valueOf(object));
 /*     */       }
@@ -347,15 +348,15 @@ import org.apache.commons.lang3.Validate;
 /*     */   }
 /*     */ 
 /*     */   public List<Integer> getIntegerList(String path) {
-/* 385 */     List list = getList(path);
+/* 385 */     List<?> list = getList(path);
 /*     */ 
 /* 387 */     if (list == null) {
-/* 388 */       return new ArrayList(0);
+/* 388 */       return new ArrayList<Integer>(0);
 /*     */     }
 /*     */ 
-/* 391 */     List result = new ArrayList();
+/* 391 */     List<Integer> result = new ArrayList<Integer>();
 /*     */ 
-/* 393 */     for (Iterator i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
+/* 393 */     for (Iterator<?> i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
 /* 394 */       if ((object instanceof Integer))
 /* 395 */         result.add((Integer)object);
 /* 396 */       else if ((object instanceof String))
@@ -374,15 +375,15 @@ import org.apache.commons.lang3.Validate;
 /*     */   }
 /*     */ 
 /*     */   public List<Boolean> getBooleanList(String path) {
-/* 412 */     List list = getList(path);
+/* 412 */     List<?> list = getList(path);
 /*     */ 
 /* 414 */     if (list == null) {
-/* 415 */       return new ArrayList(0);
+/* 415 */       return new ArrayList<Boolean>(0);
 /*     */     }
 /*     */ 
-/* 418 */     List result = new ArrayList();
+/* 418 */     List<Boolean> result = new ArrayList<Boolean>();
 /*     */ 
-/* 420 */     for (Iterator i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
+/* 420 */     for (Iterator<?> i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
 /* 421 */       if ((object instanceof Boolean))
 /* 422 */         result.add((Boolean)object);
 /* 423 */       else if ((object instanceof String)) {
@@ -398,15 +399,15 @@ import org.apache.commons.lang3.Validate;
 /*     */   }
 /*     */ 
 /*     */   public List<Double> getDoubleList(String path) {
-/* 436 */     List list = getList(path);
+/* 436 */     List<?> list = getList(path);
 /*     */ 
 /* 438 */     if (list == null) {
-/* 439 */       return new ArrayList(0);
+/* 439 */       return new ArrayList<Double>(0);
 /*     */     }
 /*     */ 
-/* 442 */     List result = new ArrayList();
+/* 442 */     List<Double> result = new ArrayList<Double>();
 /*     */ 
-/* 444 */     for (Iterator i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
+/* 444 */     for (Iterator<?> i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
 /* 445 */       if ((object instanceof Double))
 /* 446 */         result.add((Double)object);
 /* 447 */       else if ((object instanceof String))
@@ -425,15 +426,15 @@ import org.apache.commons.lang3.Validate;
 /*     */   }
 /*     */ 
 /*     */   public List<Float> getFloatList(String path) {
-/* 463 */     List list = getList(path);
+/* 463 */     List<?> list = getList(path);
 /*     */ 
 /* 465 */     if (list == null) {
-/* 466 */       return new ArrayList(0);
+/* 466 */       return new ArrayList<Float>(0);
 /*     */     }
 /*     */ 
-/* 469 */     List result = new ArrayList();
+/* 469 */     List<Float> result = new ArrayList<Float>();
 /*     */ 
-/* 471 */     for (Iterator i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
+/* 471 */     for (Iterator<?> i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
 /* 472 */       if ((object instanceof Float))
 /* 473 */         result.add((Float)object);
 /* 474 */       else if ((object instanceof String))
@@ -452,15 +453,15 @@ import org.apache.commons.lang3.Validate;
 /*     */   }
 /*     */ 
 /*     */   public List<Long> getLongList(String path) {
-/* 490 */     List list = getList(path);
+/* 490 */     List<?> list = getList(path);
 /*     */ 
 /* 492 */     if (list == null) {
-/* 493 */       return new ArrayList(0);
+/* 493 */       return new ArrayList<Long>(0);
 /*     */     }
 /*     */ 
-/* 496 */     List result = new ArrayList();
+/* 496 */     List<Long> result = new ArrayList<Long>();
 /*     */ 
-/* 498 */     for (Iterator i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
+/* 498 */     for (Iterator<?> i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
 /* 499 */       if ((object instanceof Long))
 /* 500 */         result.add((Long)object);
 /* 501 */       else if ((object instanceof String))
@@ -479,15 +480,15 @@ import org.apache.commons.lang3.Validate;
 /*     */   }
 /*     */ 
 /*     */   public List<Byte> getByteList(String path) {
-/* 517 */     List list = getList(path);
+/* 517 */     List<?> list = getList(path);
 /*     */ 
 /* 519 */     if (list == null) {
-/* 520 */       return new ArrayList(0);
+/* 520 */       return new ArrayList<Byte>(0);
 /*     */     }
 /*     */ 
-/* 523 */     List result = new ArrayList();
+/* 523 */     List<Byte> result = new ArrayList<Byte>();
 /*     */ 
-/* 525 */     for (Iterator i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
+/* 525 */     for (Iterator<?> i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
 /* 526 */       if ((object instanceof Byte))
 /* 527 */         result.add((Byte)object);
 /* 528 */       else if ((object instanceof String))
@@ -506,15 +507,15 @@ import org.apache.commons.lang3.Validate;
 /*     */   }
 /*     */ 
 /*     */   public List<Character> getCharacterList(String path) {
-/* 544 */     List list = getList(path);
+/* 544 */     List<?> list = getList(path);
 /*     */ 
 /* 546 */     if (list == null) {
-/* 547 */       return new ArrayList(0);
+/* 547 */       return new ArrayList<Character>(0);
 /*     */     }
 /*     */ 
-/* 550 */     List result = new ArrayList();
+/* 550 */     List<Character> result = new ArrayList<Character>();
 /*     */ 
-/* 552 */     for (Iterator i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
+/* 552 */     for (Iterator<?> i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
 /* 553 */       if ((object instanceof Character)) {
 /* 554 */         result.add((Character)object);
 /* 555 */       } else if ((object instanceof String)) {
@@ -532,15 +533,15 @@ import org.apache.commons.lang3.Validate;
 /*     */   }
 /*     */ 
 /*     */   public List<Short> getShortList(String path) {
-/* 570 */     List list = getList(path);
+/* 570 */     List<?> list = getList(path);
 /*     */ 
 /* 572 */     if (list == null) {
-/* 573 */       return new ArrayList(0);
+/* 573 */       return new ArrayList<Short>(0);
 /*     */     }
 /*     */ 
-/* 576 */     List result = new ArrayList();
+/* 576 */     List<Short> result = new ArrayList<Short>();
 /*     */ 
-/* 578 */     for (Iterator i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
+/* 578 */     for (Iterator<?> i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
 /* 579 */       if ((object instanceof Short))
 /* 580 */         result.add((Short)object);
 /* 581 */       else if ((object instanceof String))
@@ -559,16 +560,16 @@ import org.apache.commons.lang3.Validate;
 /*     */   }
 /*     */ 
 /*     */   public List<Map<?, ?>> getMapList(String path) {
-/* 597 */     List list = getList(path);
-/* 598 */     List result = new ArrayList();
+/* 597 */     List<?> list = getList(path);
+/* 598 */     List<Map<?, ?>> result = new ArrayList<Map<?, ?>>();
 /*     */ 
 /* 600 */     if (list == null) {
 /* 601 */       return result;
 /*     */     }
 /*     */ 
-/* 604 */     for (Iterator i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
+/* 604 */     for (Iterator<?> i$ = list.iterator(); i$.hasNext(); ) { Object object = i$.next();
 /* 605 */       if ((object instanceof Map)) {
-/* 606 */         result.add((Map)object);
+/* 606 */         result.add((Map<?, ?>)object);
 /*     */       }
 /*     */     }
 /*     */ 
@@ -607,7 +608,7 @@ import org.apache.commons.lang3.Validate;
 /* 705 */     if ((section instanceof MemorySection)) {
 /* 706 */       MemorySection sec = (MemorySection)section;
 /*     */ 
-/* 708 */       for (Map.Entry entry : sec.map.entrySet()) {
+/* 708 */       for (Map.Entry<String, Object> entry : sec.map.entrySet()) {
 /* 709 */         output.add(createPath(section, (String)entry.getKey(), this));
 /*     */ 
 /* 711 */         if ((deep) && ((entry.getValue() instanceof ConfigurationSection))) {
@@ -628,7 +629,7 @@ import org.apache.commons.lang3.Validate;
 /* 726 */     if ((section instanceof MemorySection)) {
 /* 727 */       MemorySection sec = (MemorySection)section;
 /*     */ 
-/* 729 */       for (Map.Entry entry : sec.map.entrySet()) {
+/* 729 */       for (Map.Entry<String, Object> entry : sec.map.entrySet()) {
 /* 730 */         output.put(createPath(section, (String)entry.getKey(), this), entry.getValue());
 /*     */ 
 /* 732 */         if (((entry.getValue() instanceof ConfigurationSection)) && 
@@ -640,7 +641,7 @@ import org.apache.commons.lang3.Validate;
 /*     */     {
 /* 739 */       Map<String, Object> values = section.getValues(deep);
 /*     */ 
-/* 741 */       for (Map.Entry entry : values.entrySet())
+/* 741 */       for (Map.Entry<String, Object> entry : values.entrySet())
 /* 742 */         output.put(createPath(section, (String)entry.getKey(), this), entry.getValue());
 /*     */     }
 /*     */   }

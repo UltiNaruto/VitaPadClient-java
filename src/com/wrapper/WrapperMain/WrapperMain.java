@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
 
 import com.wrapper.WrapperMain.utils.JarUtils;
 import com.wrapper.WrapperMain.utils.OSDetectionUtils;
